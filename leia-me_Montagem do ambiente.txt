@@ -1,0 +1,72 @@
+yarn init -y
+yarn add express
+yarn add typescript -D
+yarn tsc --init         -> criar o arquivo de configuração tsconfig.json do typyscript
+Criar a pasta SRC
+	criar arquivo: server.ts
+        Configurar o arquivo tsconfig.json
+                "outdir": "./dist",
+		"rootdir": "./src",
+
+        importar o express dentro do arquivo server.ts
+        Importar os tipos do express
+	yarn add @types/express -D
+
+
+yarn add ts-node-dev -D  ===> similar ao nodemon só que para codar com typescript
+
+
+==================================================
+Colocar os padronizadores de codigo
+
+   1# editorConfig	==> garante um padrão de codigo entre editores
+   2# ESlist		==> automatiza a padronização dentro do codigo, isere de forma automatica pontos e virgulas e afins
+		yarn add eslint -D
+		yarn eslint --init => starta configuração do eslint
+		.eslintignore => criar esse arquivo  na raiz do projeto
+		yarn add eslint-import-resolver-typescript -D
+
+   3# prettier 		==>
+
+   seguir tutirial: https://www.notion.so/Padr-es-de-projeto-com-ESLint-Prettier-e-EditorConfig-0b57b47a24724c859c0cf226aa0cc3a7
+
+Src => pasta que possui todo o codigo "core" da aplicação
+	models ou entities => pasta(src/model) que fica a estrutura de todo o tipo de dado que precisa ser persistido na aplicação
+	routes => pasta(src/routes) que fica todas as rotas da aplicação, inclusive a principal (index) que direciona para todas as outras
+		Uma rota deve possuir as seguintes responsabilidades:
+			Receber uma requisição, chamar o arquivo que trata aquele tipo de requisição e devolver uma resposta 
+	
+	repositories => pasta(src/repositories) que fica os arquivos para interação com as bases de dados , normalmente ha um arquivo de repositories para cada um de models
+  
+		Uma conexão entre a "persistencia de dados" e as rotas, ou seja ...
+		persistência <-> repositories <-> rotas(routes)
+	  
+	service => armazena as regras de negocios da aplicação 
+			Como identificar as regras de negocios - os ifs/elses muito especificos 
+			Normalmente os arquivos dessa pasta começam com a primeira letra em caixa alta 
+			Cada arquivo de service deve possuir uma unica funcionalidade/regra de negocios
+	  
+
+
+DTO - Data transfer object
+
+SOLID
+	Referencia: https://www.notion.so/Repository-service-e-patterns-82419cceb11c4c4fbbc055ade7fb1ac5
+
+	Sigle responsability principle 
+	Dependency invertion principle
+	
+
+	Separation of Concerns (SoC)
+		a arquitetura solftware deve ser moldada pensando em SoC: Separation of Concerns (separação de procupação)
+		
+	Dependency inversion
+		Sempre que minha clase tiver a dependencia de um objeto, ela deve receber este como parametro no construtor 
+		
+DRY: Don't repeat yourself ==> Não repita regra de negocios
+
+
+
+
+
+parei em: iniciando-back-end-do-app -> Estratégias de abstração

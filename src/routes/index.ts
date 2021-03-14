@@ -8,6 +8,7 @@
 import { Router } from 'express';
 import appointmentsRouter from './appointments.routes'; // primeira roda de uma entidade da aplicacao
 import usersRouter from './users.routes';
+import sessionsRouter from './sessions.routes';
 
 const routes = Router();
 
@@ -15,5 +16,6 @@ const routes = Router();
 // para a rota appointments.routes.ts pois eh ela que expoe o objeto de rota appointmentsRouter
 routes.use('/appointments', appointmentsRouter);
 routes.use('/users', usersRouter);
+routes.use('/sessions', sessionsRouter);
 
 export default routes;
