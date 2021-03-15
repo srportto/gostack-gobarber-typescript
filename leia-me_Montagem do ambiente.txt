@@ -53,8 +53,11 @@ DTO - Data transfer object
 SOLID
 	Referencia: https://www.notion.so/Repository-service-e-patterns-82419cceb11c4c4fbbc055ade7fb1ac5
 
-	Sigle responsability principle 
-	Dependency invertion principle
+	S - Sigle responsability principle 
+	O - 
+	L - 
+	I - 
+	D - Dependency invertion principle
 	
 
 	Separation of Concerns (SoC)
@@ -70,3 +73,98 @@ DRY: Don't repeat yourself ==> Não repita regra de negocios
 
 
 parei em: iniciando-back-end-do-app -> Estratégias de abstração
+
+
+
+
+Estrategia para abstração de dados 
+	Driver nativo
+	query builder 
+		Exemplo: knex.js 
+		
+	ORM (object Relational Mapping)
+		sequeleze (recomendado para javascript puro)
+		typeORM (recomendado para typeScript)
+			obs.: o orm usa um query builder (knex.js) por baixo 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+==============>> Criar o container do banco de dados da aplicação (postgreSQL)
+
+Para criar um container com a base de dados postgress e direcionar esse acesso para a porta 5432
+	
+docker run --name gostack_dbpostgres0 -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+
+Docker do gostack atual 2021
+	CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS          PORTS                    NAMES
+	76e32f6a0f8a   postgres   "docker-entrypoint.s…"   38 seconds ago   Up 35 seconds   0.0.0.0:5432->5432/tcp   gostack_dbpostgres0
+	
+	id inteiro:76e32f6a0f8a5d29410ae9d04dc023f5bf4d33b49d94460b3d6c5263415529e0
+
+	
+	
+==============>> Criar o arquivo de configuração da ORM 
+	1° na raiz do projeto criar o arquivo ormconfig.json
+
+{
+    "type": "postgres", 			//tipo do banco de dados 
+    "host": "localhost",		
+    "port": 5432,
+    "username": "postgres",
+    "password": "docker",
+    "database": "gostack_gobarber",
+    "entities": [
+        "./src/models/*.ts"
+    ],
+    "migrations": [
+        "./src/database/migrations/*.ts"
+    ],
+    "cli":{
+        "migrationsDir": "./src/database/migrations"
+    }
+
+}
+
+
+adicionar as dependencias typeORM e pg
+	yarn add typeorm	obs.: o typeORM possui uma cli 
+	yarn add pg ---> obs.: instalação necessaria pois estou usando postgress , se fosse mySQL seria "yarn add mysql"
+
+
+==============>> Criação da pasta de configuração das interações com o banco de dados 
+	- Dentro da pasta SRC criar a pasta "database" 
+	- dentro da pasta database criar o arquivo index.ts 
+	
+==============>> Importar config de banco de dados para aplicação 
+	Importar a pasta 'database' para o arquivo 'server.ts' da raiz do projeto 
+
+
+
+
+
+
+
+
+
+
+
+
+======================>> adição das sessions 
+
+===> colocando jwt
+	yarn add jsonwebtoken
+	yarn add @types/jsonwebtoken -D
+	
+	
+	
+	
+parei em: autenticação -> Rotas autenticadas
+	

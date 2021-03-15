@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import User from '../models/User';
+import { sign} from 'jsonwebtoken';
 
 interface RequestDTO {
     email: string;
@@ -9,6 +10,7 @@ interface RequestDTO {
 
 interface ResponseDTO {
     user: User;
+    token: string;
 
 }
 
@@ -31,8 +33,16 @@ class AuthenticateUserService {
             throw new Error('e-mail incorreto/ou senha')
         }
 
-        //se chegar até aqui ==> o usuario está autenticado
-        return {user,  };
+        const token = sign(
+            {},
+            '2b8853de28e5a0a3c09bacb9fd6e242d',
+            {
+               subject: user.id,
+               expiresIn: '1d',
+            }
+        );
+
+        return {user, token };
 
     }
 
