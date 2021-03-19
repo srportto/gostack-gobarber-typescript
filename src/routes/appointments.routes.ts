@@ -6,6 +6,7 @@ import { parseISO } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentServices';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 //
 // startOfHour  -> transformar a hora 13:33 em 13:00, ou seja, ele starta/inicia a hora
@@ -17,6 +18,11 @@ const appointmentsRouter = Router();
 
 // para ca serao direcionadas todas as reuisições da rota: http://localhost:3333/appointments
 // aonde abaixo sera tomada uma acao para cada metodo invocadado na rota (het, post, put, delete, ...)
+
+// middlewares
+appointmentsRouter.use(ensureAuthenticated);
+
+// routes
 
 appointmentsRouter.get('/', async (request, response) => {
     const appointmentsRepository = getCustomRepository(AppointmentsRepository);
