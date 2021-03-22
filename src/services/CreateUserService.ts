@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '../models/User';
+import AppError from '../errors/appError';
 
 interface Request {
     name: string;
@@ -17,7 +18,7 @@ class CreateUserService {
         });
 
         if (checkuserExists) {
-            throw new Error('Email address already used ');
+            throw new AppError('Email address already used ');
         }
 
         // criptografando senha do usuario antes de salvar no banco
