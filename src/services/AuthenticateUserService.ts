@@ -3,6 +3,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
 import authConfig from '../config/auth';
+import AppError from '../errors/appError';
 
 interface RequestDTO {
     email: string;
@@ -24,7 +25,7 @@ class AuthenticateUserService {
         const user = await usersRepository.findOne({ where: { email } });
 
         if (!user) {
-            throw new Error('e-mail incorreto/ou senha');
+            throw new AppError('e-mail incorreto/ou senha',401);
         }
 
         // user.password - senha obtida do banco criptografada
@@ -33,7 +34,7 @@ class AuthenticateUserService {
         const passwordMatched = await compare(password, user.password);
 
         if (!passwordMatched) {
-            throw new Error('e-mail incorreto/ou senha');
+            throw new AppError('e-mail incorreto/ou senha',401);
         }
 
         const { secret, expiresIn } = authConfig.jwt;

@@ -1,7 +1,7 @@
 // Responsabilidades de uma rota: Receber requisições,
 // chamar outro arquivo para tratar a requisição e devolver uma resposta
 
-import { response, Router } from 'express';
+import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '../config/upload';
 // import { parseISO } from 'date-fns';
@@ -26,40 +26,39 @@ const upload = multer(uploadConfig);
 // aonde abaixo sera tomada uma acao para cada metodo invocadado na rota (het, post, put, delete, ...)
 
 usersRouter.post('/', async (request, response) => {
-    try {
-        const { name, email, password } = request.body;
-        const createUser = new CreateUserService();
+    const { name, email, password } = request.body;
+    const createUser = new CreateUserService();
 
-        const user = await createUser.execute({
-            name,
-            email,
-            password,
-        });
+    const user = await createUser.execute({
+        name,
+        email,
+        password,
+    });
 
-        // deletando a senha do objeto users criado e apos persistir no banco para nao retornar no response
-        // comentei porque estava acusando erro, mas é apenas um aviso e descomentado funciona
-        // delete user.password;
+    // deletando a senha do objeto users criado e apos persistir no banco para nao retornar no response
+    // comentei porque estava acusando erro, mas é apenas um aviso e descomentado funciona
+    // delete user.password;
 
-        //  return response.json(user);
+    //  return response.json(user);
 
-        // alteração para devolver a senha ocultada apos mudança do typescript de nao aceitar o delete ...(acima exemplo)
-        const userWithoutPassword = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            created_at: user.createdAt,
-            updated_at: user.updateAt,
-        };
+    // alteração para devolver a senha ocultada apos mudança do typescript de nao aceitar o delete ...(acima exemplo)
+    const userWithoutPassword = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        created_at: user.createdAt,
+        updated_at: user.updateAt,
+    };
 
-        return response.json(userWithoutPassword);
-    } catch (err) {
-        return response.status(400).json({ erro: err.message });
-    }
+    return response.json(userWithoutPassword);
 });
 
 // patch: base_url/user/avatar
-usersRouter.patch('/avatar', ensureAuthenticated,upload.single('avatar'), async (request, response) => {
-    try {
+usersRouter.patch(
+    '/avatar',
+    ensureAuthenticated,
+    upload.single('avatar'),
+    async (request, response) => {
         const updateUserAvatar = new UpdateUserAvatarService();
 
         const user = await updateUserAvatar.execute({
@@ -78,10 +77,7 @@ usersRouter.patch('/avatar', ensureAuthenticated,upload.single('avatar'), async 
         };
 
         return response.json(userWithoutPassword);
-
-    } catch (err) {
-        return response.status(400).json({ erro: err.message });
-    }
-});
+    },
+);
 
 export default usersRouter;
