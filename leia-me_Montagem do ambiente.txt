@@ -166,5 +166,22 @@ adicionar as dependencias typeORM e pg
 	
 	
 	
-parei em: autenticação -> Rotas autenticadas
+==> yarn  add tsconfig-paths -D
 	
+	
+Usar LIB para injeção de dependencias
+	yarn add tsyringe
+	
+	
+Parei em usando controllers
+	
+	no controler só pode ter os metodos 
+		index - Listagem de lançamentos 
+		show - para mostrar detalhes de um unico 
+		create - criar 
+		update - para atualizar **** utilizado apenas para atualizar todas as informações da entidade, se precisar uma atualização parcial ... criar novo controllers ***
+		delete - para deletar 
+		
+		
+	
+
